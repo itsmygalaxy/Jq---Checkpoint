@@ -1,0 +1,55 @@
+[Expert@Management:0]# mgmt_cli login user admin password <passwd> > id.txt
+[Expert@Management:0]# ls
+id.txt  last_dump.log
+[Expert@Management:0]# more id.txt
+uid: "15364670-ad61-46bc-8c16-7295296e127b"
+sid: "875BJ5Gb0HJ_PF0bjvkKtmKhDHNYcpHcbpGG1tLsLnA"
+url: "https://127.0.0.1:443/web_api"
+session-timeout: 600
+last-login-was-at:
+  posix: 1499365689947
+  iso-8601: "2017-07-06T13:28-0500"
+  [Expert@Management:0]# mgmt_cli show hosts -s id.txt --format json > hosts.json
+[Expert@Management:0]# ls
+hosts.json  id.txt  last_dump.log
+[Expert@Management:0]# more hosts.json
+{
+  "objects" : [ {
+    "uid" : "334444a4-fee3-457d-8c07-80381a2052dc",
+    "name" : "host1",
+    "type" : "host",
+    "domain" : {
+      "uid" : "41e821a0-3720-11e3-aa6e-0800200c9fde",
+      "name" : "SMC User",
+      "domain-type" : "domain"
+    },
+    "ipv4-address" : "192.0.2.100"
+  }, {
+    "uid" : "3d026536-1acb-4200-9b30-9feacfc75879",
+    "name" : "host3",
+    "type" : "host",
+    "domain" : {
+      "uid" : "41e821a0-3720-11e3-aa6e-0800200c9fde",
+      "name" : "SMC User",
+      "domain-type" : "domain"
+    },
+    "ipv4-address" : "192.0.2.102"
+  } ],
+  "from" : 1,
+  "to" : 2,
+  "total" : 2
+}
+[Expert@Management:0]# mgmt_cli logout -s id.txt
+message: "OK"
+##############JQ parsing in here######################
+[Expert@Management:0]# cat hosts.json | $CPDIR/jq/jq ".objects[] | .name"
+"host1"
+"host3"
+"Host4"
+[Expert@Management:0]# cat hosts.json | $CPDIR/jq/jq ".objects[] | .\"ipv4-address\""
+"192.0.2.100"
+"192.0.2.102"
+"1.1.1.1"
+[Expert@Management:0]#
+##############End of JQ parsing######################
+  
