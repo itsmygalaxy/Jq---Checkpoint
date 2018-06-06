@@ -1,0 +1,15 @@
+[Expert@Management:0]# mgmt_cli show-packages -u admin -p <pass> --format json | $CPDIR/jq/jq -r '.packages[] .name'
+Firewall_Policy_1
+Firewall_Policy_2
+Standard
+Test_Policy_1
+Test_Policy_2
+Test_Policy_3
+
+# if you have multiple domains then the command is:
+# mgmt_cli show-packages -u admin -p <pass> -d <domain> --format json | $CPDIR/jq/jq -r '.packages[] .name'
+# The other way of doing things is that you can store the password in a text and use it (as explained in JQ Parsing)
+
+
+
+
