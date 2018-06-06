@@ -1,4 +1,9 @@
+[Expert@Management:0]# mgmt_cli login user admin password <passwd> domain <domain> > id.txt
+OR
+[Expert@Management:0]# mgmt_cli login -r true domain <domain> > id.txt   ( -r, just asking the script to use root login)
+OR
 [Expert@Management:0]# mgmt_cli login user admin password <passwd> > id.txt
+
 [Expert@Management:0]# ls
 id.txt  last_dump.log
 [Expert@Management:0]# more id.txt
