@@ -1,5 +1,5 @@
 #!/bin/sh
-mgmt_cli login user admin password root123 > id.txt
+mgmt_cli login user admin password passwd > id.txt
 mgmt_cli show hosts -s id.txt --format json > hosts.json
 mgmt_cli show networks -s id.txt --format json > networks.json
 mgmt_cli show groups -s id.txt --format json > groups.json
