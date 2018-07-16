@@ -1,0 +1,37 @@
+#!/bin/sh
+mgmt_cli login user admin password root123 > id.txt
+mgmt_cli show hosts -s id.txt --format json > hosts.json
+mgmt_cli show networks -s id.txt --format json > networks.json
+mgmt_cli show groups -s id.txt --format json > groups.json
+mgmt_cli logout -s id.txt
+
+echo "DISPLAYING ALL HOSTS:"
+cat hosts.json | $CPDIR/jq/jq ".objects[] | .name+ \" "\"" + .\"ipv4-address\" + \" "\"" + .type"
+
+echo "DISPLAYING IPv4 NETWORKS:"
+cat networks.json | $CPDIR/jq/jq ".objects[] | .name + \" "\"" + .\"subnet4\" + \" "\"" + .\"subnet-mask\""
+
+echo "DISPLAYING ALL GROUPS:"
+cat groups.json | $CPDIR/jq/jq ".objects[] | .name"
+
+
+#####################################OUTPUT#####################
+[Expert@Mgmt1:0]# ./hosts.sh
+message: "OK"
+
+DISPLAYING HOSTS
+"Host1 2.1.1.1"
+"Host2 2.1.1.2"
+"Host3 2.1.1.3"
+DISPLAYING IPv4 NETWORKS
+"CP_default_Office_Mode_addresses_pool 172.16.10.0 255.255.255.0"
+"IPv6_Link_Local_Hosts  "
+DISPLAYING GROUPS
+"Group2"
+"Group3"
+"Group_1"
+#####################################OUTPUT#####################
+
+Additonal inputs:
+If you need a separator ":"
+mgmt_cli show hosts -s id.txt --format json | $CPDIR/jq/jq ".objects[] | .name + \" ":"\" + .\"ipv4-address\""
