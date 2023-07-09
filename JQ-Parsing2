@@ -35,3 +35,8 @@ DISPLAYING GROUPS
 Additonal inputs:
 If you need a separator ":"
 mgmt_cli show hosts -s id.txt --format json | $CPDIR/jq/jq ".objects[] | .name + \" ":"\" + .\"ipv4-address\""
+
+######################
+New Update, objects were removed and now its "members" for the Groups
+mgmt_cli show group name "Group_Name_xxx" --format json -s id.txt  > group_xxx.json
+cat group_xxx.json | jq '.members[] | [.name, ."ipv4-address", .subnet4, ."mask-length4" ] | @csv' -r
